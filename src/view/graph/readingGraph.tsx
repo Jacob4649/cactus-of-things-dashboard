@@ -37,8 +37,8 @@ export default function ReadingGraph(props: ReadingGraphProps) {
 
     return <ResponsiveContainer width="100%" aspect={3}>
         <LineChart data={data}>
-            <Line type="monotone" dataKey="Moisture" stroke="#8884d8" dot={false} />
-            <XAxis dataKey="Date" />
+            <Line type="monotone" dataKey="moisture" stroke="#8884d8" dot={false} />
+            <XAxis dataKey="date" type="number" />
             <Tooltip />
         </LineChart>
     </ResponsiveContainer >;

@@ -1,13 +1,44 @@
 /**
  * Representation of a single sensor reading
  */
-interface SensorReading {
+interface ServerSensorReading {
 
-    Light: boolean
+    /**
+     * Light level (0 - Dark, 1 - Bright)
+     */
+    Light: number
 
+    /**
+     * Moisture level (0 - 4095)
+     */
     Moisture: number
 
+    /**
+     * Reading time
+     */
     Date: Date
+
+}
+
+/**
+ * Representation of a single sensor reading for use by this application
+ */
+interface SensorReading {
+
+    /**
+     * Whether it was bright
+     */
+    light: boolean
+
+    /**
+     * Date in unix epoch milliseconds
+     */
+    date: number
+
+    /**
+     * Moisture level (0% - 100%)
+     */
+    moisture: number
 
 }
 
@@ -19,8 +50,6 @@ interface SensorReading {
  * @returns 
  */
 function getReadings(start: Date, end: Date, timeout: number = 5000): Promise<SensorReading[]> {
-    let readings: SensorReading[] = [];
-
     const endpoint = 'https://cactus-of-things-backend-m7qypuwi7a-uc.a.run.app/readings';
 
     let url = `${endpoint}?start=${start.toISOString()}&end=${end.toISOString()}`
@@ -34,7 +63,12 @@ function getReadings(start: Date, end: Date, timeout: number = 5000): Promise<Se
 
         fetch(url)
             .then(response => response.json())
-            .then(json => json as SensorReading[])
+            .then(json => json as ServerSensorReading[])
+            .then(readings => readings.map(reading => ({
+                light: reading.Light == 1,
+                moisture: reading.Moisture / 4095,
+                date: reading.Date.getTime()
+            })))
             .then(readings => {
                 clearTimeout(timeoutID);
                 if (!timedOut)
