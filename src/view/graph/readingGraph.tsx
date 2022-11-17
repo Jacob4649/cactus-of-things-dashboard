@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getReadings, SensorReading } from "../../model/sensorReadings";
-import { LineChart, Line, ResponsiveContainer, XAxis, Tooltip, ComposedChart, CartesianGrid, YAxis } from 'recharts'
+import { LineChart, Line, ResponsiveContainer, XAxis, Tooltip, ComposedChart, CartesianGrid, YAxis, Area } from 'recharts'
 import { json } from "stream/consumers";
 
 type ReadingGraphScale = ("1-hour" | "5-hour" | "12-hour" | "day" | "week" | "2-week" | "month")
@@ -44,6 +44,19 @@ function dateTickFormatter(scale: ReadingGraphScale): (tick: number) => string {
     }
 }
 
+interface ChartReading {
+
+    moisture: number;
+
+    date: number;
+
+    /**
+     * Light level, 1 for
+     */
+    lightChart: number;
+
+}
+
 /**
  * Graph of sensor readings
  * @param props {@link ReadingGraphProps} for this graph
@@ -55,23 +68,32 @@ function ReadingGraph(props: ReadingGraphProps) {
 
     const [end, setEnd] = useState(props.end ?? new Date());
 
-    const [data, setData] = useState<SensorReading[]>();
+    const [data, setData] = useState<ChartReading[]>();
 
     useEffect(() => {
-        getReadings(start, end, 15000).then(response => setData(response));
+        getReadings(start, end, 15000).then(response => {
+            let readings = response.map(reading => ({ ...reading, lightChart: reading.light ? 1 : 0 }));
+            setData(readings);
+        });
     }, [start, end]);
 
     return <ResponsiveContainer width="100%" aspect={3}>
         <ComposedChart data={data}>
-            <Line type="monotone" dataKey="moisture" stroke="#8884d8" dot={false} />
+            <Tooltip labelFormatter={label => new Date(label).toLocaleString()}
+                formatter={(v, n, p) => {
+                    if (n == "moisture")
+                        return [(v as number * 100).toFixed(2) + "%", "Moisture"];
+                    else
+                        return [v == 1 ? "Day" : "Night", "Lighting"];
+                }} />
+            <CartesianGrid horizontal={false} strokeDasharray="4 4" fill="#404040" />
+            <Area dataKey="lightChart" fill="#CEC168" activeDot={false} dot={false} stroke="none" />
             <XAxis dataKey="date" type="number" domain={["auto", "auto"]} scale="time"
                 tickFormatter={dateTickFormatter(props.scale)} interval="preserveStartEnd"
                 minTickGap={15} />
             <YAxis dataKey="moisture" domain={[0, 1]}
                 tickFormatter={tick => `${(tick * 100).toFixed(0)}%`} />
-            <Tooltip labelFormatter={label => new Date(label).toLocaleString()}
-                formatter={(v, n, p) => [(v as number * 100).toFixed(2) + "%", "Moisture"]} />
-            <CartesianGrid horizontal={false} strokeDasharray="4 4" />
+            <Line type="monotone" dataKey="moisture" stroke="#4FE186" dot={false} strokeWidth={4} />
         </ComposedChart>
     </ResponsiveContainer >;
 }
