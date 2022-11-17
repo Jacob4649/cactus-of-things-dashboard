@@ -67,7 +67,7 @@ function getReadings(start: Date, end: Date, timeout: number = 5000): Promise<Se
             .then(readings => readings.map(reading => ({
                 light: reading.Light == 1,
                 moisture: reading.Moisture / 4095,
-                date: reading.Date.getTime()
+                date: reading.Date.valueOf()
             })))
             .then(readings => {
                 clearTimeout(timeoutID);
