@@ -5,6 +5,7 @@ import App from './view/App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import NoMatch from './view/navigation/noMatch';
+import Dashboard from './view/graph/dashboard';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -13,6 +14,7 @@ root.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<App />}>
+        <Route path="dashboard" element={<Dashboard />} />
         <Route path="*" element={<NoMatch />} />
       </Route>
     </Routes>

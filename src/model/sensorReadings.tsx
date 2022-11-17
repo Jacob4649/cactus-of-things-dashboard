@@ -14,9 +14,9 @@ interface ServerSensorReading {
     Moisture: number
 
     /**
-     * Reading time
+     * Reading time in RFC3339
      */
-    Date: Date
+    Date: string
 
 }
 
@@ -67,7 +67,7 @@ function getReadings(start: Date, end: Date, timeout: number = 5000): Promise<Se
             .then(readings => readings.map(reading => ({
                 light: reading.Light == 1,
                 moisture: reading.Moisture / 4095,
-                date: reading.Date.valueOf()
+                date: Date.parse(reading.Date)
             })))
             .then(readings => {
                 clearTimeout(timeoutID);
