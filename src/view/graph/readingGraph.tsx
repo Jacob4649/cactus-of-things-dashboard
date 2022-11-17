@@ -64,7 +64,7 @@ interface ChartReading {
  */
 function ReadingGraph(props: ReadingGraphProps) {
 
-    const [start, setStart] = useState(props.start ?? new Date(Date.now() - 5 * 60 * 60 * 1000));
+    const [start, setStart] = useState(props.start ?? new Date(Date.now() - 2 * 24 * 60 * 60 * 1000));
 
     const [end, setEnd] = useState(props.end ?? new Date());
 
