@@ -5,6 +5,6 @@ import { ReadingGraph } from "./readingGraph";
  */
 export default function Dashboard() {
     return <>
-        <ReadingGraph scale="5-hour"></ReadingGraph>
+        <ReadingGraph scale="day"></ReadingGraph>
     </>
 }
