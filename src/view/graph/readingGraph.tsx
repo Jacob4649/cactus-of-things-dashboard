@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getReadings, SensorReading } from "../../model/sensorReadings";
-import { LineChart, Line, ResponsiveContainer, XAxis, Tooltip, ComposedChart, CartesianGrid } from 'recharts'
+import { LineChart, Line, ResponsiveContainer, XAxis, Tooltip, ComposedChart, CartesianGrid, YAxis } from 'recharts'
 import { json } from "stream/consumers";
 
 type ReadingGraphScale = ("1-hour" | "5-hour" | "12-hour" | "day" | "week" | "2-week" | "month")
@@ -67,6 +67,8 @@ function ReadingGraph(props: ReadingGraphProps) {
             <XAxis dataKey="date" type="number" domain={["auto", "auto"]} scale="time"
                 tickFormatter={dateTickFormatter(props.scale)} interval="preserveStartEnd"
                 minTickGap={15} />
+            <YAxis dataKey="moisture" domain={[0, 1]}
+                tickFormatter={tick => `${(tick * 100).toFixed(0)}%`} />
             <Tooltip labelFormatter={label => new Date(label).toLocaleString()}
                 formatter={(v, n, p) => [(v as number * 100).toFixed(2) + "%", "Moisture"]} />
             <CartesianGrid horizontal={false} strokeDasharray="4 4" />
