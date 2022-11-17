@@ -67,7 +67,8 @@ function ReadingGraph(props: ReadingGraphProps) {
             <XAxis dataKey="date" type="number" domain={["auto", "auto"]} scale="time"
                 tickFormatter={dateTickFormatter(props.scale)} interval="preserveStartEnd"
                 minTickGap={15} />
-            <Tooltip />
+            <Tooltip labelFormatter={label => new Date(label).toLocaleString()}
+                formatter={(v, n, p) => [(v as number * 100).toFixed(2) + "%", "Moisture"]} />
         </LineChart>
     </ResponsiveContainer >;
 }
