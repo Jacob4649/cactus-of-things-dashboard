@@ -7,6 +7,6 @@ import './dashboard.css';
 export default function Dashboard() {
     return <>
         <h1>Moisture Level of Cactus</h1>
-        <ReadingGraph scale="day"></ReadingGraph>
+        <ReadingGraph scale="day" className="chart" />
     </>
 }

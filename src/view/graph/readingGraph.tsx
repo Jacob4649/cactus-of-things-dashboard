@@ -24,6 +24,11 @@ interface ReadingGraphProps {
      * Scale for this graph
      */
     scale: ReadingGraphScale
+
+    /**
+     * Classname for this graph
+     */
+    className?: string
 }
 
 /**
@@ -77,7 +82,7 @@ function ReadingGraph(props: ReadingGraphProps) {
         });
     }, [start, end]);
 
-    return <ResponsiveContainer width="100%" aspect={2.5}>
+    return <ResponsiveContainer width="100%" aspect={2.4} className={props.className}>
         <ComposedChart data={data}>
             <Tooltip labelFormatter={label => new Date(label).toLocaleString()}
                 formatter={(v, n, p) => {
