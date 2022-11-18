@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { getReadings, SensorReading } from "../../model/sensorReadings";
-import { LineChart, Line, ResponsiveContainer, XAxis, Tooltip, ComposedChart, CartesianGrid, YAxis, Area } from 'recharts'
-import { json } from "stream/consumers";
+import { Area, CartesianGrid, ComposedChart, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { getReadings } from "../../model/sensorReadings";
 
 type ReadingGraphScale = ("1-hour" | "5-hour" | "12-hour" | "day" | "week" | "2-week" | "month")
 
@@ -104,6 +103,6 @@ function ReadingGraph(props: ReadingGraphProps) {
     </ResponsiveContainer >;
 }
 
-export { ReadingGraph }
+export { ReadingGraph };
+export type { ReadingGraphScale };
 
-export type { ReadingGraphScale }
