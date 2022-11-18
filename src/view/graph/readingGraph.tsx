@@ -77,7 +77,7 @@ function ReadingGraph(props: ReadingGraphProps) {
         });
     }, [start, end]);
 
-    return <ResponsiveContainer width="100%" aspect={3}>
+    return <ResponsiveContainer width="100%" aspect={2.5}>
         <ComposedChart data={data}>
             <Tooltip labelFormatter={label => new Date(label).toLocaleString()}
                 formatter={(v, n, p) => {
@@ -92,7 +92,8 @@ function ReadingGraph(props: ReadingGraphProps) {
                 tickFormatter={dateTickFormatter(props.scale)} interval="preserveStartEnd"
                 minTickGap={15} />
             <YAxis dataKey="moisture" domain={[0, 1]}
-                tickFormatter={tick => `${(tick * 100).toFixed(0)}%`} />
+                tickFormatter={tick => `${(tick * 100).toFixed(0)}%`}
+                minTickGap={15} />
             <Line type="monotone" dataKey="moisture" stroke="#4FE186" dot={false} strokeWidth={4} />
         </ComposedChart>
     </ResponsiveContainer >;
