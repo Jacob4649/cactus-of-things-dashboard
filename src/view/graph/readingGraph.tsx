@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Area, CartesianGrid, ComposedChart, Label, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { Area, CartesianGrid, ComposedChart, Label, Line, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { getReadings } from "../../model/sensorReadings";
 
 type ReadingGraphScale = ("1-hour" | "5-hour" | "12-hour" | "day" | "week" | "2-week" | "month")
@@ -123,6 +123,11 @@ function ReadingGraph(props: ReadingGraphProps) {
                 </Label>
             </YAxis>
             <Line type="monotone" dataKey="moisture" stroke="#4FE186" dot={false} strokeWidth={4} />
+            {loading ? <ReferenceLine y="0.5" strokeDasharray="4 4">
+                <Label fill="white" offset={50} position="centerTop" fontSize="4avh">
+                    Loading...
+                </Label>
+            </ReferenceLine> : undefined}
         </ComposedChart>
     </ResponsiveContainer >;
 }
