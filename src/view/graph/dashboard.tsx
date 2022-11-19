@@ -1,33 +1,25 @@
-import { ReadingGraph, ReadingGraphScale } from "./readingGraph";
+import { ReadingGraph, ReadingGraphScale, scaleAliases } from "./readingGraph";
 import './dashboard.css';
 import { useState } from "react";
 import Select from "react-select";
-import { SingleValue, ActionMeta, InputActionMeta } from "react-select/dist/declarations/src";
 
 /**
  * Dashboard for cactus-of-things
  */
 export default function Dashboard() {
 
-    const [scale, setScale] = useState<ReadingGraphScale>("day");
+    const [scale, setScale] = useState<ReadingGraphScale>("5-hour");
 
     let [start, end] = scaleToInterval(scale);
 
-    const selectionOptions = [
-        { value: "1-hour", label: "Last Hour" },
-        { value: "5-hour", label: "Last Five Hours" },
-        { value: "12-hour", label: "Last Twelve Hours" },
-        { value: "day", label: "Last Day" },
-        { value: "week", label: "Last Week" },
-        { value: "2-week", label: "Last Two Weeks" },
-        { value: "month", label: "Last Month" }
-    ]
+    const selectionOptions = Array.from(scaleAliases.keys())
+        .map(key => ({ label: scaleAliases.get(key) as string, value: key as string }));
 
     return <>
         <h1>Moisture Level of Cactus</h1>
         <Select options={selectionOptions}
             onChange={(v, a) => setScale(v?.value as ReadingGraphScale)}
-            defaultValue={{ value: "5-hour", label: "Last Five Hours" }} />
+            defaultValue={{ value: scale as string, label: scaleAliases.get(scale) as string }} />
         <ReadingGraph start={start} end={end} scale={scale} className="chart" />
     </>
 }

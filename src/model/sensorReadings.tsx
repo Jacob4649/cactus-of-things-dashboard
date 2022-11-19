@@ -65,7 +65,7 @@ function getReadings(start: Date, end: Date, timeout: number = 5000): Promise<Se
             .then(response => response.json())
             .then(json => json as ServerSensorReading[])
             .then(readings => readings.map(reading => ({
-                light: reading.Light == 1,
+                light: reading.Light === 1,
                 moisture: reading.Moisture / 4095,
                 date: Date.parse(reading.Date)
             })))
