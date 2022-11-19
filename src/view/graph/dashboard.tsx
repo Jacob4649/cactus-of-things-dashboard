@@ -16,7 +16,6 @@ export default function Dashboard() {
         .map(key => ({ label: scaleAliases.get(key) as string, value: key as string }));
 
     return <>
-        <h1>Moisture Level of Cactus</h1>
         <Select options={selectionOptions}
             onChange={(v, a) => setScale(v?.value as ReadingGraphScale)}
             defaultValue={{ value: scale as string, label: scaleAliases.get(scale) as string }} />
