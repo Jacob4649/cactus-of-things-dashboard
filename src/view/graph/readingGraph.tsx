@@ -12,12 +12,12 @@ interface ReadingGraphProps {
     /**
      * Start {@link Date} for the graph
      */
-    start?: Date
+    start: Date
 
     /**
      * End {@link Date} for the graph
      */
-    end?: Date
+    end: Date
 
     /**
      * Scale for this graph
@@ -50,12 +50,18 @@ function dateTickFormatter(scale: ReadingGraphScale): (tick: number) => string {
 
 interface ChartReading {
 
+    /**
+     * Moisture level as a percentage
+     */
     moisture: number;
 
+    /**
+     * The date in unix epoch millis
+     */
     date: number;
 
     /**
-     * Light level, 1 for
+     * Light level, 1 for light 0 for dark
      */
     lightChart: number;
 
@@ -68,18 +74,14 @@ interface ChartReading {
  */
 function ReadingGraph(props: ReadingGraphProps) {
 
-    const [start, setStart] = useState(props.start ?? new Date(Date.now() - 2 * 24 * 60 * 60 * 1000));
-
-    const [end, setEnd] = useState(props.end ?? new Date());
-
     const [data, setData] = useState<ChartReading[]>();
 
     useEffect(() => {
-        getReadings(start, end, 15000).then(response => {
+        getReadings(props.start, props.end, 15000).then(response => {
             let readings = response.map(reading => ({ ...reading, lightChart: reading.light ? 1 : 0 }));
             setData(readings);
         });
-    }, [start, end]);
+    }, [props.start, props.end]);
 
     return <ResponsiveContainer width="100%" aspect={2.4} className={props.className}>
         <ComposedChart data={data}>
@@ -92,7 +94,7 @@ function ReadingGraph(props: ReadingGraphProps) {
                 }} />
             <CartesianGrid horizontal={false} strokeDasharray="4 4" fill="#404040" />
             <Area dataKey="lightChart" fill="#CEC168" activeDot={false} dot={false} stroke="none" />
-            <XAxis dataKey="date" type="number" domain={["auto", "auto"]} scale="time"
+            <XAxis dataKey="date" type="number" domain={["dataMin", "dataMax"]} scale="time"
                 tickFormatter={dateTickFormatter(props.scale)} interval="preserveStartEnd"
                 minTickGap={15} />
             <YAxis dataKey="moisture" domain={[0, 1]}
