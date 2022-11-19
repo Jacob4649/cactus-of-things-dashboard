@@ -44,10 +44,10 @@ interface SensorReading {
 
 /**
  * 
- * @param start 
- * @param end 
- * @param timeout
- * @returns 
+ * @param start start of period to get readings from
+ * @param end end of period to get readings from
+ * @param timeout timeout before failing to fetch readings
+ * @returns the fetched readings as a {@link Promise} for an array of {@link SensorReading}s
  */
 function getReadings(start: Date, end: Date, timeout: number = 5000): Promise<SensorReading[]> {
     const endpoint = 'https://cactus-of-things-backend-m7qypuwi7a-uc.a.run.app/readings';
