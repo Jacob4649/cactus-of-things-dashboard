@@ -1,0 +1,111 @@
+.current-reading-info {
+    display: inline-block;
+    padding: 0.75rem;
+    font-size: x-large;
+    border-radius: 0.45rem;
+    background-color: #0C703E;
+    color: white;
+    font-weight: lighter;
+    max-width: 75vmin;
+}
+
+.refresh-current-readings-button {
+    position: absolute;
+    display: inline-block;
+    right: 0.5rem;
+    border-radius: 0.45rem;
+    background-color: #0C703E;
+    color: white;
+    max-width: 10vmin;
+    max-height: 10vmin;
+    padding: 0.25rem;    
+}
+
+.refresh-current-readings-image {
+    width: 100%;
+    height: 100%; 
+    max-width: 10vmin;
+    max-height: 10vmin;  
+}
+
+.current-reading-graph {
+    padding: 0.5rem;
+    text-align: center;
+    position: relative;
+}
+
+.current-reading-info-header {
+    font-size: small;
+}
+
+.time-text {
+    color: transparent;
+    font-weight: normal;
+}
+
+.time-text-light {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.1);
+    background: -webkit-gradient(linear, left top, right top, from(rgb(212, 154, 18)), to(rgb(212, 154, 18)), color-stop(0.5, white));
+    background: -moz-gradient(linear, left top, right top, from(rgb(212, 154, 18)), to(rgb(212, 154, 18)), color-stop(0.5, white));
+    background: gradient(linear, left top, right top, from(rgb(212, 154, 18)), to(rgb(212, 154, 18)), color-stop(0.5, white));
+    -webkit-background-size: 500% 100%;
+    -moz-background-size: 500% 100%;
+    background-size: 500% 100%;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    -webkit-animation-name: shimmer;
+    -moz-animation-name: shimmer;
+    animation-name: shimmer;
+    -webkit-animation-duration: 2s;
+    -moz-animation-duration: 2s;
+    animation-duration: 2s;
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    animation-direction: alternate-reverse;
+    -moz-animation-direction: alternate-reverse;
+    -webkit-animation-direction: alternate-reverse;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    background-color: #222;
+}
+
+.time-text-dark {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.1);
+    background: -webkit-gradient(linear, left top, right top, from(#222), to(#222), color-stop(0.5, rgb(94, 18, 109)));
+    background: -moz-gradient(linear, left top, right top, from(#222), to(#222), color-stop(0.5, rgb(83, 10, 98)));
+    background: gradient(linear, left top, right top, from(#222), to(#222), color-stop(0.5, rgb(96, 20, 111)));
+    -webkit-background-size: 500% 100%;
+    -moz-background-size: 500% 100%;
+    background-size: 500% 100%;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    -webkit-animation-name: shimmer;
+    -moz-animation-name: shimmer;
+    animation-name: shimmer;
+    -webkit-animation-duration: 2s;
+    -moz-animation-duration: 2s;
+    animation-duration: 2s;
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    animation-direction: alternate-reverse;
+    -moz-animation-direction: alternate-reverse;
+    -webkit-animation-direction: alternate-reverse;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    background-color: #222;
+}
+
+@keyframes shimmer {
+    0% {
+            background-position: top left;
+    }
+    100% {
+            background-position: top right;
+    }
+}

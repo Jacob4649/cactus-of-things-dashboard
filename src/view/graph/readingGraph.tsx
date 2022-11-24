@@ -133,5 +133,5 @@ function ReadingGraph(props: ReadingGraphProps) {
 }
 
 export { ReadingGraph, scaleAliases };
-export type { ReadingGraphScale };
+export type { ReadingGraphScale, ChartReading };
 

@@ -81,5 +81,40 @@ function getReadings(start: Date, end: Date, timeout: number = 5000): Promise<Se
     });
 }
 
-export { getReadings };
+/**
+ * 
+ * @param timeout timeout before failing to fetch current reading
+ * @returns {@link Promise} for current {@link SensorReading}
+ */
+function getCurrentReading(timeout: number = 5000): Promise<SensorReading> {
+    const endpoint = 'https://cactus-of-things-backend-m7qypuwi7a-uc.a.run.app/readings/current';
+
+    return new Promise((resolve, reject) => {
+        let timedOut = false;
+        const timeoutID = setTimeout(() => {
+            timedOut = true;
+            reject(new Error('Request timeout'));
+        }, timeout);
+
+        fetch(endpoint)
+            .then(response => response.json())
+            .then(json => json as ServerSensorReading)
+            .then(reading => ({
+                light: reading.Light === 1,
+                moisture: reading.Moisture / 4095,
+                date: Date.parse(reading.Date)
+            }))
+            .then(readings => {
+                clearTimeout(timeoutID);
+                if (!timedOut)
+                    resolve(readings);
+            })
+            .catch(error => {
+                if (!timedOut) // error before timeout
+                    reject(error);
+            });
+    });
+}
+
+export { getReadings, getCurrentReading };
 export type { SensorReading };

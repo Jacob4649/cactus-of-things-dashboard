@@ -2,11 +2,33 @@ import { ReadingGraph, ReadingGraphScale, scaleAliases } from "./readingGraph";
 import './dashboard.css';
 import { useState } from "react";
 import Select from "react-select";
+import { BrowserView, MobileView } from "react-device-detect";
+import CurrentReadingGraph from "./currentReadingGraph";
+
+export default function Dashboard() {
+    return <>
+        <BrowserView>
+            <DesktopDashboard></DesktopDashboard>
+        </BrowserView>
+        <MobileView>
+            <MobileDashboard></MobileDashboard>
+        </MobileView>
+    </>
+}
 
 /**
- * Dashboard for cactus-of-things
+ * Mobile dashboard
  */
-export default function Dashboard() {
+function MobileDashboard() {
+    return <>
+        <CurrentReadingGraph />
+    </>
+}
+
+/**
+ * Desktop dashboard for cactus-of-things
+ */
+function DesktopDashboard() {
 
     const [scale, setScale] = useState<ReadingGraphScale>("5-hour");
 
