@@ -92,7 +92,7 @@ function ReadingGraph(props: ReadingGraphProps) {
 
     useEffect(() => {
         setLoading(true);
-        getReadings(props.start, props.end, 15000).then(response => {
+        getReadings(props.start, props.end, 300, 15000).then(response => {
             let readings = response.map(reading => ({ ...reading, lightChart: reading.light ? 1 : 0 }));
             setData(readings);
             setLoading(false);
